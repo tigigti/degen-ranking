@@ -68,7 +68,7 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == $_GET["name"]): ?>
                 </tr>
             </thead>
             <tbody>
-                <tr onClick="foo('buy')">
+                <tr onClick="buy('lootbox','3',<?php echo $_SESSION['id']; ?>,'coins')">
                     <th scope="row">3 Coins</th>
                     <td>Lootbox</td>
                     <td>Beinhaltet eine zufällige Einheit für deine Gang</td>
@@ -80,11 +80,31 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == $_GET["name"]): ?>
 
 
 </div>
+
+<script src="js/jquery-3.6.0.min.js" type="text/javascript"></script>
+<script src="js/bootstrap.bundle.min.js" type="text/javascript"></script>
+
 <script type="text/javascript">
-    function foo(text){
-        var buy = confirm("Do you want to buy shit?");
+    function buy(item, price, id, currency){
+        var buy = confirm("Do you want to buy "+item+"?");
         if(buy){
-            console.log(text);
+            $.ajax({
+                method: "POST",
+                url: "./php/buy_item.php",
+                data: {
+                    id: id,
+                    item: item,
+                    price: price,
+                    currency: currency
+                }
+            }).done(function(res){
+                if(res === "OK") {
+                    window.location = window.location;
+                }
+                else {
+                    alert(res);
+                }
+            });
         }
     }
 
@@ -94,7 +114,6 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == $_GET["name"]): ?>
         shopTable.style.display = shopTable.style.display == "block" ? "none" : "block";
     });
 </script>
-<?php
-include_once "./templates/footer.php";
-?>
+
+</body>
 </html>
