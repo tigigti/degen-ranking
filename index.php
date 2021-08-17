@@ -41,6 +41,9 @@ while ($row = $res->fetch_array()): ?>
             <?php endwhile;?>
         </tbody>
     </table>
+    <?php if (isset($_SESSION["username"])): ?>
+    <a type="button" class="btn btn-dark" href="/vote.php">Vote</a>
+    <?php endif?>
 </div>
 <?php
 include_once "./templates/footer.php";

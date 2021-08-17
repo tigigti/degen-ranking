@@ -15,6 +15,7 @@
                 <a class="nav-link" href="/register.php">Register</a>
             <?php else: ?>
                 <a class="nav-link" href="#"><?php echo $_SESSION["username"]; ?></a>
+                <a class="nav-link" href="/vote.php">Vote</a>
                 <a class="nav-link" href="/logout.php">Logout</a>
             <?php endif;?>
             <a class="nav-link" href="#">Votes</a>
