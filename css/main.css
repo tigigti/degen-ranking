@@ -1,0 +1,23 @@
+.vote-icon {
+  background-color: red;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  margin-left: 1em;
+}
+
+.vote-icon.active {
+  background-color: green;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.profile-container {
+  margin-bottom: 1rem;
+}

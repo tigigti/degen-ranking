@@ -65,7 +65,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
     $mysqli->close();
 }
 ?>
-<form method="POST" action="/login.php">
+<form method="POST" action="login.php">
     <div class="container">
     <div class="mb-3 row">
         <label for="username" class="col-sm-2 col-form-label">Username</label>

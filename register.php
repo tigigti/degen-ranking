@@ -30,7 +30,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
         echo '<div class="alert alert-danger" role="alert">';
         echo "Username exists!";
         echo "</div>";
-        echo "<a href='../register.php'>Back</a>";
+        echo "<a href='register.php'>Back</a>";
         echo "</div>";
 
         return;
@@ -58,14 +58,14 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
         echo '<div class="alert alert-success" role="alert">';
         echo "Registration successfull!";
         echo "</div>";
-        echo "<a href='../login.php'>Login</a>";
+        echo "<a href='login.php'>Login</a>";
         echo "</div>";
     }
 
     $stmt->close();
 }
 ?>
-<form method="POST" action="/register.php">
+<form method="POST" action="register.php">
     <div class="container">
     <div class="mb-3 row">
         <label for="username" class="col-sm-2 col-form-label">Username</label>

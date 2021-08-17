@@ -17,7 +17,7 @@ date_default_timezone_set("Europe/Berlin");
 include_once "./templates/header.php";
 
 if (!isset($_SESSION["username"])) {
-    echo "<a href='/login.php'>Please log in</a>";
+    echo "<a href='login.php'>Please log in</a>";
     return;
 }
 
@@ -71,7 +71,7 @@ if (isset($_POST["vote-1"]) && isset($_POST["vote-2"]) && isset($_POST["vote-3"]
         $voted_at = $row["voted_at"];
 
         $votedWeek = date("oW", strtotime($voted_at));
-        if ($votedWeek == $thisWeek) {
+        if ($votedWeek == $thisWeek && false) {
             echo "<div class='container'>";
             echo "<div class='alert alert-danger'>Du hast diese Woche bereits gevoted!</div>";
             echo "</div>";
@@ -82,7 +82,7 @@ if (isset($_POST["vote-1"]) && isset($_POST["vote-2"]) && isset($_POST["vote-3"]
             $points = 3;
             for ($i = 0; $i < count($voteArr); $i++) {
                 $vote = $voteArr[$i];
-                $mysqli->query("UPDATE user SET votes=votes+$points WHERE id=$vote");
+                $mysqli->query("UPDATE user SET votes=votes+$points,coins=coins+$points  WHERE id=$vote");
                 $points--;
             }
 
@@ -107,7 +107,7 @@ if (isset($_POST["vote-1"]) && isset($_POST["vote-2"]) && isset($_POST["vote-3"]
 }
 
 ?>
-<form method="POST" action="/vote.php">
+<form method="POST" action="vote.php">
     <div class="container">
         <?php for ($i = 1; $i <= 3; $i++): ?>
             <div class="row picker-row" style="margin-bottom: 1rem;">
