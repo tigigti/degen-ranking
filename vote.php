@@ -71,7 +71,7 @@ if (isset($_POST["vote-1"]) && isset($_POST["vote-2"]) && isset($_POST["vote-3"]
         $voted_at = $row["voted_at"];
 
         $votedWeek = date("oW", strtotime($voted_at));
-        if ($votedWeek == $thisWeek && false) {
+        if ($votedWeek == $thisWeek) {
             echo "<div class='container'>";
             echo "<div class='alert alert-danger'>Du hast diese Woche bereits gevoted!</div>";
             echo "</div>";
