@@ -10,6 +10,7 @@ $result = $mysqli->query("SELECT * FROM user WHERE id=$userid");
 $row = $result->fetch_array();
 $coins = $row["$currency"];
 $username = $row["username"];
+include_once "./units.php";
 
 if ($coins >= $price) {
     // User bezahlen lassen
@@ -17,13 +18,27 @@ if ($coins >= $price) {
 
     // In die jeweilige Tabelle gehen und Produkt hinzufügen
 
-    $mysqli->query("UPDATE user SET $item=$item+1 WHERE id=$userid");
+    if ($item == "lootbox") {
+        $randInt = random_int(1, count($unitArray));
+        $unit = $unitArray[$randInt];
+        $unitType = $unit["type"];
+        $unitName = $unit["name"];
 
-    if ($item != "money") {
-        $mysqli->query("INSERT INTO game_log VALUES (0,now(),'$username hat sich $item besorgt')");
+        $mysqli->query("UPDATE user SET $unitType=$unitType+1 WHERE id=$userid");
+        $mysqli->query("INSERT INTO game_log VALUES (0,now(),'In $username Lootbox war $unitName!')");
+
+        echo "Du hast $unitName erhalten!";
+        return;
+
+    } else {
+        $mysqli->query("UPDATE user SET $item=$item+1 WHERE id=$userid");
+
+        if ($item != "money") {
+            $mysqli->query("INSERT INTO game_log VALUES (0,now(),'$username hat sich $item besorgt')");
+        }
+        echo "OK";
+        return;
     }
-    echo "OK";
-    return;
 }
 
 echo "Not enough $currency boi";

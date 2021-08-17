@@ -31,10 +31,15 @@ if ($id) {
 
     // Get base information
     $coins = $row["coins"];
+    $scavenger = $row["scavenger"];
+    $scraps = $row["scraps"];
 
     // Timer and cooldowns
     $zone = new DateTimeZone("Europe/Berlin");
     $scavengerTimer = new DateTime($row["scavengerTimer"], $zone);
+
+    $today = new DateTime("now", $zone);
+    $scavengerDiff = $today->diff($scavengerTimer);
 
     // Other User
     $userArray = array();
@@ -52,6 +57,7 @@ if ($id) {
 <div class="container">
     <ul class="list-group">
         <li class="list-group-item">Coins: <?php echo $coins; ?></li>
+        <li class="list-group-item">Schrott: <?php echo $scraps; ?></li>
     </ul>
 
 <?php
@@ -78,6 +84,25 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == $_GET["name"]): ?>
     </div>
 <?php endif;?>
 
+    <!-- Unit Section -->
+    <h2>Units</h2>
+
+    <!-- Scavenger -->
+    <?php if ($scavenger > 0): ?>
+    <div class="user-section">
+        <h4 class="user-section__title"><?php echo $scavenger; ?> Turbo Degen</h4>
+        <div class="user-section__images">
+            <?php for ($i = 0; $i < $scavenger; $i++): ?>
+            <img src="assets/turbo-degen.png" height=64 width=64/>
+            <?php endfor;?>
+        </div>
+        <div class="user-section__actions">
+            <button class="btn btn-dark">Action</button>
+        </div>
+    </div>
+    <?php endif;?>
+    <!-- Building Section -->
+    <h2>Base</h2>
 
 </div>
 
@@ -103,6 +128,7 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == $_GET["name"]): ?>
                 }
                 else {
                     alert(res);
+                    window.location = window.location;
                 }
             });
         }
