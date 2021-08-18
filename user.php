@@ -85,7 +85,7 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == $_GET["name"]): ?>
 <?php endif;?>
 
     <!-- Unit Section -->
-    <h2>Units</h2>
+    <h2>Gang</h2>
 
     <!-- Scavenger -->
     <?php if ($scavenger > 0): ?>
@@ -97,7 +97,14 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == $_GET["name"]): ?>
             <?php endfor;?>
         </div>
         <div class="user-section__actions">
-            <button class="btn btn-dark">Action</button>
+            <?php if (($scavengerDiff->days >= 1 or $scavengerDiff->h >= 1) && $_SESSION["username"] == $username): ?>
+            <button
+                class="btn btn-dark action-btn"
+                data-unit="scavenger"
+                data-amount="<?php echo $scavenger; ?>">
+                Scavenge
+            </button>
+            <?php endif;?>
         </div>
     </div>
     <?php endif;?>
@@ -138,6 +145,29 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == $_GET["name"]): ?>
     var shopTable = document.querySelector("#degen-shop");
     shopBtn.addEventListener("click",function(e){
         shopTable.style.display = shopTable.style.display == "block" ? "none" : "block";
+    });
+
+    $(".action-btn").on("click",function(e){
+        var unit = $(this).attr("data-unit");
+        var id = <?php echo $_SESSION["id"]; ?>;
+        var amount = $(this).attr("data-amount");
+        var username = "<?php echo $_SESSION["username"] ?>";
+
+        $.ajax({
+            method: "POST",
+            url: "./php/action.php",
+            data: {
+                unit: unit,
+                id: id,
+                amount: amount,
+                username: username
+            }
+        }).done(function(res){
+            if(res){
+                confirm(res);
+            }
+            window.location = window.location;
+        });
     });
 </script>
 
