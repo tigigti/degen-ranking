@@ -19,6 +19,7 @@
                 <a class="nav-link" href="vote.php">Vote</a>
                 <a class="nav-link" href="logout.php">Logout</a>
             <?php endif;?>
+            <a class="nav-link" href="logs.php">Logs</a>
         </div>
         </div>
     </div>

@@ -60,7 +60,7 @@ foreach ($users as $user): ?>
             <tr>
                 <th><?php echo $rank++; ?></th>
                 <td>
-                    <?php echo $user["name"]; ?>
+                    <a href="user.php?name=<?php echo $user["name"]; ?>&id=<?php echo $user["id"]; ?>"><?php echo $user["name"]; ?></a>
                 </td>
                 <td><?php echo $user["votes"]; ?></td>
             </tr>
@@ -82,17 +82,17 @@ foreach ($users as $user): ?>
                         <?php
 foreach ($users as $user):
     $percent = floor($user["total_votes"] * 100 / $totalVotes);?>
-		                        <div class="row">
-		                            <div class="col-md-6">
-		                                <?php echo $user["name"]; ?>
-		                            </div>
-		                            <div class="col-md-6">
-		                                <div class="progress">
-		                                    <div class="progress-bar" style="width: <?php echo $percent; ?>%"><?php echo $percent; ?>%</div>
-		                                </div>
-		                            </div>
-		                        </div>
-		                    <?php endforeach;?>
+				                        <div class="row">
+				                            <div class="col-md-6">
+				                                <?php echo $user["name"]; ?>
+				                            </div>
+				                            <div class="col-md-6">
+				                                <div class="progress">
+				                                    <div class="progress-bar" style="width: <?php echo $percent; ?>%"><?php echo $percent; ?>%</div>
+				                                </div>
+				                            </div>
+				                        </div>
+				                    <?php endforeach;?>
                     </div>
                 </div>
             </div>

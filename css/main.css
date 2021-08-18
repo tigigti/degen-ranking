@@ -28,3 +28,10 @@
   padding: 4px;
   margin: 1rem 0;
 }
+
+tr a,
+tr a:hover,
+tr a:focus {
+  color: white;
+  text-decoration: none;
+}
