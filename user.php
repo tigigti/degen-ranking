@@ -33,17 +33,20 @@ if ($id) {
     $coins = $row["coins"];
     $scavenger = $row["scavenger"];
     $scraps = $row["scraps"];
+    $bomber = $row["bomber"];
 
     // Timer and cooldowns
     $zone = new DateTimeZone("Europe/Berlin");
     $scavengerTimer = new DateTime($row["scavengerTimer"], $zone);
+    $bomberTimer = new DateTime($row["bomberTimer"], $zone);
 
     $today = new DateTime("now", $zone);
     $scavengerDiff = $today->diff($scavengerTimer);
+    $bomberDiff = $today->diff($bomberTimer);
 
     // Other User
     $userArray = array();
-    $userStmt = $mysqli->prepare("SELECT id,username FROM user WHERE NOT username=?");
+    $userStmt = $mysqli->prepare("SELECT id,username FROM user WHERE NOT username=? ORDER BY votes DESC;");
     $userStmt->bind_param("s", $username);
     $userStmt->execute();
     if (!($userRes = $userStmt->get_result())) {
@@ -108,6 +111,33 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == $_GET["name"]): ?>
         </div>
     </div>
     <?php endif;?>
+
+    <!-- Bomber -->
+    <?php if ($bomber > 0): ?>
+    <div class="user-section">
+        <h4 class="user-section__title"><?php echo $bomber; ?> Ibos Anne</h4>
+        <div class="user-section__images">
+            <?php for ($i = 0; $i < $bomber; $i++): ?>
+            <img src="assets/ibos-anne.png" height=64 width=64/>
+            <?php endfor;?>
+        </div>
+        <div class="user-section__actions">
+            <?php if (($bomberDiff->days >= 1 or $bomberDiff->h >= 4) && $_SESSION["username"] == $username): ?>
+            <button
+                class="btn btn-dark action-btn"
+                data-unit="bomber"
+                data-amount="<?php echo $bomber; ?>">
+                Mine Legen bei
+            </button>
+            <select id="bomber-select" class="form-select" aria-label="Default select example">
+            <?php foreach ($userArray as $user): ?>
+            <option value="<?php echo $user[0]; ?>"><?php echo $user[1]; ?></option>
+            <?php endforeach;?>
+            </select>
+            <?php endif;?>
+        </div>
+    </div>
+    <?php endif;?>
     <!-- Building Section -->
     <h2>Base</h2>
 
@@ -152,16 +182,22 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == $_GET["name"]): ?>
         var id = <?php echo $_SESSION["id"]; ?>;
         var amount = $(this).attr("data-amount");
         var username = "<?php echo $_SESSION["username"] ?>";
+        var data = {
+            unit: unit,
+            id: id,
+            amount: amount,
+            username: username
+        }
+
+        var selectField = $("#"+unit+"-select");
+        if(selectField){
+            data.enemyid = selectField.val();
+        }
 
         $.ajax({
             method: "POST",
             url: "./php/action.php",
-            data: {
-                unit: unit,
-                id: id,
-                amount: amount,
-                username: username
-            }
+            data: data
         }).done(function(res){
             if(res){
                 confirm(res);

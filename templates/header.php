@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
-<link rel="stylesheet" href="css/main.css"/>
+<link rel="stylesheet" href="css/main.css?<?php echo date("H:i"); ?>"/>
 </head>
 <?php include_once "./php/db.php";?>
 <body>
