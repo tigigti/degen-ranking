@@ -82,17 +82,17 @@ foreach ($users as $user): ?>
                         <?php
 foreach ($users as $user):
     $percent = floor($user["total_votes"] * 100 / $totalVotes);?>
-				                        <div class="row">
-				                            <div class="col-md-6">
-				                                <?php echo $user["name"]; ?>
-				                            </div>
-				                            <div class="col-md-6">
-				                                <div class="progress">
-				                                    <div class="progress-bar" style="width: <?php echo $percent; ?>%"><?php echo $percent; ?>%</div>
-				                                </div>
-				                            </div>
-				                        </div>
-				                    <?php endforeach;?>
+									                        <div class="row">
+									                            <div class="col-md-6">
+									                                <?php echo $user["name"]; ?>
+									                            </div>
+									                            <div class="col-md-6">
+									                                <div class="progress">
+									                                    <div class="progress-bar" style="width: <?php echo $percent; ?>%"><?php echo $percent; ?>%</div>
+									                                </div>
+									                            </div>
+									                        </div>
+									                    <?php endforeach;?>
                     </div>
                 </div>
             </div>
@@ -106,11 +106,14 @@ foreach ($users as $user): ?>
                         <div class="flex-row">
                             Kann Voten:
                             <?php
-$now = new DateTime("now");
-$last_vote = new DateTime($user["last_vote"]);
-$diff = $now->diff($last_vote);
-$diff = $diff->days;
-if ($diff < 7): ?>
+
+$thisWeek = date("oW", time());
+
+$row = $res->fetch_array();
+$voted_at = $user["last_vote"];
+$votedWeek = date("oW", strtotime($voted_at));
+
+if ($votedWeek == $thisWeek): ?>
                                 <div class="vote-icon"></div>
                             <?php else: ?>
                                 <div class="vote-icon active"></div>

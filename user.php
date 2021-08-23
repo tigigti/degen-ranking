@@ -34,6 +34,8 @@ if ($id) {
     $scavenger = $row["scavenger"];
     $scraps = $row["scraps"];
     $bomber = $row["bomber"];
+    $watchpost = $row["watchpost"];
+    $mine = $row["mine"];
 
     // Timer and cooldowns
     $zone = new DateTimeZone("Europe/Berlin");
@@ -58,9 +60,13 @@ if ($id) {
 }
 ?>
 <div class="container">
+    <h1><?php echo $username; ?></h1>
     <ul class="list-group">
         <li class="list-group-item">Coins: <?php echo $coins; ?></li>
         <li class="list-group-item">Schrott: <?php echo $scraps; ?></li>
+        <?php if ($watchpost > 0): ?>
+        <li class="list-group-item" style="color: crimson;">Minen: <?php echo $mine; ?></li>
+        <?php endif;?>
     </ul>
 
 <?php
@@ -81,6 +87,11 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == $_GET["name"]): ?>
                     <th scope="row">3 Coins</th>
                     <td>Lootbox</td>
                     <td>Beinhaltet eine zufällige Einheit für deine Gang</td>
+                </tr>
+                <tr onClick="buy('watchpost','1000',<?php echo $_SESSION['id']; ?>,'scraps')">
+                    <th scope="row">1000 Schrott</th>
+                    <td>Wachturm</td>
+                    <td>Zeigt zusätzliche Informationen über deine Base an. Kann von Angreifern zerstört werden.</td>
                 </tr>
             </tbody>
         </table>
@@ -140,6 +151,17 @@ if (isset($_SESSION["username"]) && $_SESSION["username"] == $_GET["name"]): ?>
     <?php endif;?>
     <!-- Building Section -->
     <h2>Base</h2>
+    <!-- Watchposts -->
+    <?php if ($watchpost > 0): ?>
+    <div class="user-section">
+        <h4 class="user-section__title"><?php echo $watchpost; ?> Wachposten</h4>
+        <div class="user-section__images">
+            <?php for ($i = 0; $i < $watchpost; $i++): ?>
+            <img src="assets/watchtower.png" height=64 width=64/>
+            <?php endfor;?>
+        </div>
+    </div>
+    <?php endif;?>
 
 </div>
 

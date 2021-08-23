@@ -36,7 +36,7 @@ if ($coins >= $price) {
         if ($item != "money") {
             $mysqli->query("INSERT INTO game_log VALUES (0,now(),'$username hat sich $item besorgt')");
         }
-        echo "OK";
+        echo "Du hast $item gekauft";
         return;
     }
 }
